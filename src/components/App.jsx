@@ -6,8 +6,21 @@ import Footer from "./footer";
 import NoteContent from "./notecontent";
 
 function App() {
+    
+    const savedNotes = JSON.parse(window.localStorage.getItem('keeper') || '[]');
+
+    useEffect(() =>{
+        if(savedNotes.length!== 0){
+            setNotes(savedNotes);
+        }
+
+    },[])
 
     const [notes, setNotes] = useState([]);
+    
+    useEffect(() =>{
+        window.localStorage.setItem('keeper', JSON.stringify(notes));
+    },[notes]);
 
     function addNote(note) {
         setNotes(prev => {
